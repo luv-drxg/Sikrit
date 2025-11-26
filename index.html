@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Alwaysyou</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center; 
+      align-items: center;    
+      flex-direction: column;
+    }
+
+    #playBtn {  
+      background: red;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .falling {
+      position: absolute;
+      top: -50px;
+      animation: fall linear infinite;
+      font-weight: bold;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    img {
+      border-radius: 10px;
+    }
+
+    /* ✅ Default (desktop) */
+    .falling {
+      font-size: 24px;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+    }
+
+    /* ✅ Tablet */
+    @media (max-width: 1024px) {
+      .falling {
+        font-size: 20px;
+      }
+      img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    /* ✅ Phone */
+    @media (max-width: 500px) {
+      .falling {
+        font-size: 50px;
+      }
+      img.falling {
+        width: 100px;
+        height: auto;
+      }
+      #playBtn {
+        padding: 12px 20px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="playBtn">Play</button>
+  <audio id="bgMusic" class="hidden" loop>
+    <source src="iloveyou.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const playBtn = document.getElementById("playBtn");
+    const music = document.getElementById("bgMusic");
+    const texts = ["I MISS YOU ☹️", "I MISS YOU☹️"];
+    const images = [
+      "by1.jpg","by2.jpg","by3.jpg","by4.jpg","by5.jpg",
+      "by6.jpg","by7.jpg","by8.jpg","by9.jpg","by10.jpg"
+    ];
+
+    playBtn.addEventListener("click", () => {
+      playBtn.style.display = "none";
+      music.play();
+
+      setInterval(() => {
+        if (Math.random() < 0.6) {
+          let text = document.createElement("div");
+          text.className = "falling";
+          text.style.left = Math.random() * 90 + "vw";
+          text.style.animationDuration = (3 + Math.random() * 3) + "s";
+          text.innerText = texts[Math.floor(Math.random() * texts.length)];
+          document.body.appendChild(text);
+          setTimeout(() => text.remove(), 6000);
+        } else {
+          let img = document.createElement("img");
+          img.className = "falling";
+          img.style.left = Math.random() * 90 + "vw";
+          img.style.animationDuration = (3 + Math.random() * 3) + "s";
+          img.src = images[Math.floor(Math.random() * images.length)];
+          document.body.appendChild(img);
+          setTimeout(() => img.remove(), 6000);
+        }
+      }, 300);
+    });
+  </script>
+</body>
+</html>
